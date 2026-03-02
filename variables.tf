@@ -111,6 +111,6 @@ variable "ami_owner_id" {
 }
 
 variable "wg_server_interface" {
-  default     = "eth0"
+  default     = "ens5"
   description = "The default interface to forward network traffic to."
 }
