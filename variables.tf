@@ -96,7 +96,7 @@ variable "ami_prefix" {
 }
 
 variable "ami_release" {
-  default     = "noble-24.04"
+  default     = "focal-20.04"
   description = "OS release to look for in AMI name when automatically choosing an image."
 }
 
