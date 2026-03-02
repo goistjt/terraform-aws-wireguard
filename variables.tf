@@ -1,9 +1,10 @@
 variable "ssh_key_id" {
   description = "A SSH public key ID to add to the VPN instance."
+  nullable = true
 }
 
 variable "instance_type" {
-  default     = "t2.micro"
+  default     = "t3.micro"
   description = "The machine type to launch, some machines may offer higher throughput for higher use cases."
 }
 
@@ -95,7 +96,7 @@ variable "ami_prefix" {
 }
 
 variable "ami_release" {
-  default     = "focal-20.04"
+  default     = "noble-24.04"
   description = "OS release to look for in AMI name when automatically choosing an image."
 }
 
