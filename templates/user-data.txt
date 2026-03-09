@@ -70,6 +70,18 @@ ${peers}
         fi
       fi
 
+      # Disable src/dst check
+      // Source - https://stackoverflow.com/a/57507735
+      // Posted by Matus Dubrava, modified by community. See post 'Timeline' for change history
+      // Retrieved 2026-03-09, License - CC BY-SA 4.0
+      # Source - https://stackoverflow.com/a/57507735
+      # Posted by Matus Dubrava, modified by community. See post 'Timeline' for change history
+      # Retrieved 2026-03-09, License - CC BY-SA 4.0
+      EC2_INSTANCE_ID="`wget -q -O - http://169.254.169.254/latest/meta-data/instance-id`"
+      EC2_REGION_ID="curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/.$//'"
+      aws ec2 modify-instance-attribute --no-source-dest-check --instance-id $EC2_INSTANCE_ID --region $EC2_REGION_ID
+
+
       # Networking and MTU
       ip link set dev ${wg_server_interface} mtu 1420
       sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf

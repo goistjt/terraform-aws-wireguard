@@ -15,6 +15,7 @@ data "aws_iam_policy_document" "wireguard_policy_doc" {
   statement {
     actions = [
       "ec2:AssociateAddress",
+      "ec2:ModifyInstanceAttribute"
     ]
 
     resources = ["*"]
