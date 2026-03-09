@@ -71,9 +71,6 @@ ${peers}
       fi
 
       # Disable src/dst check
-      // Source - https://stackoverflow.com/a/57507735
-      // Posted by Matus Dubrava, modified by community. See post 'Timeline' for change history
-      // Retrieved 2026-03-09, License - CC BY-SA 4.0
       # Source - https://stackoverflow.com/a/57507735
       # Posted by Matus Dubrava, modified by community. See post 'Timeline' for change history
       # Retrieved 2026-03-09, License - CC BY-SA 4.0
