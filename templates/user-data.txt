@@ -104,9 +104,10 @@ ${peers}
       iptables -t nat -L -n -v
 
       # Firewall rules
-      ufw allow ssh
-      ufw allow ${wg_server_port}/udp
-      ufw --force enable
+      #ufw allow ssh
+      #ufw allow ${wg_server_port}/udp
+      #ufw --force enable
+      ufw --force disable
 
       # Enable and start WireGuard
       systemctl enable wg-quick@wg0.service
