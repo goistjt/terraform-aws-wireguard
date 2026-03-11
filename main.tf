@@ -62,6 +62,7 @@ resource "aws_launch_template" "wireguard_launch_template" {
   }))
 
   network_interfaces {
+    subnet_id = var.subnet_ids[0]
     associate_public_ip_address = var.use_eip
     security_groups             = local.security_groups_ids
   }
@@ -74,7 +75,6 @@ resource "aws_launch_template" "wireguard_launch_template" {
 resource "aws_instance" "wireguard_server" {
   source_dest_check = false
   user_data_replace_on_change = true
-  subnet_id = var.subnet_ids[0]
 
   launch_template {
     id = aws_launch_template.wireguard_launch_template.id
