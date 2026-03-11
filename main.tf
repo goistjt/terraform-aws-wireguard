@@ -71,34 +71,54 @@ resource "aws_launch_template" "wireguard_launch_template" {
   }
 }
 
-resource "aws_autoscaling_group" "wireguard_asg" {
-  name_prefix          = "wireguard-${var.env}-"
-  min_size             = var.asg_min_size
-  desired_capacity     = var.asg_desired_capacity
-  max_size             = var.asg_max_size
-  vpc_zone_identifier  = var.subnet_ids
-  health_check_type    = "EC2"
-  termination_policies = ["OldestLaunchConfiguration", "OldestInstance"]
-  target_group_arns    = var.target_group_arns
+resource "aws_instance" "wireguard_server" {
+  source_dest_check = false
+  user_data_replace_on_change = true
+  subnet_id = var.subnet_ids[0]
+
+  launch_template {
+    id = aws_launch_template.wireguard_launch_template.id
+    version = "$Latest"
+  }
 
   lifecycle {
     create_before_destroy = true
   }
 
-  launch_template {
-    id      = aws_launch_template.wireguard_launch_template.id
-    version = "$Latest"
-  }
-
-  tag {
-    key                 = "Name"
-    value               = aws_launch_template.wireguard_launch_template.name
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "env"
-    value               = var.env
-    propagate_at_launch = true
+  tags = {
+    env = var.env
+    Name = aws_launch_template.wireguard_launch_template.name
   }
 }
+
+# resource "aws_autoscaling_group" "wireguard_asg" {
+#   name_prefix          = "wireguard-${var.env}-"
+#   min_size             = var.asg_min_size
+#   desired_capacity     = var.asg_desired_capacity
+#   max_size             = var.asg_max_size
+#   vpc_zone_identifier  = var.subnet_ids
+#   health_check_type    = "EC2"
+#   termination_policies = ["OldestLaunchConfiguration", "OldestInstance"]
+#   target_group_arns    = var.target_group_arns
+#
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+#
+#   launch_template {
+#     id      = aws_launch_template.wireguard_launch_template.id
+#     version = "$Latest"
+#   }
+#
+#   tag {
+#     key                 = "Name"
+#     value               = aws_launch_template.wireguard_launch_template.name
+#     propagate_at_launch = true
+#   }
+#
+#   tag {
+#     key                 = "env"
+#     value               = var.env
+#     propagate_at_launch = true
+#   }
+# }
