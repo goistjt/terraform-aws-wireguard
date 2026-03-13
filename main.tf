@@ -74,7 +74,7 @@ resource "aws_launch_template" "wireguard_launch_template" {
 
 resource "aws_instance" "wireguard_server" {
   source_dest_check = false
-  user_data_replace_on_change = true
+  user_data_replace_on_change = false
 
   launch_template {
     id = aws_launch_template.wireguard_launch_template.id
